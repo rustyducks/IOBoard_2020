@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "servos.h": "c",
+        "hardware_config.h": "c",
+        "tm1637.h": "c",
+        "stdbool.h": "c"
+    }
+}
