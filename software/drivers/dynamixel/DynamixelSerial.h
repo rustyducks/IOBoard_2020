@@ -14,10 +14,9 @@ public:
 		Clockwise = 1
 	};
 
-	DynamixelSerial(unsigned int serialNumber);
+	DynamixelSerial();
 
-	void begin(long baud);
-	//void end(void);
+	void init(SerialDriver* sd);
 
 	int reset(unsigned char ID);
 	int ping(unsigned char ID);
@@ -82,7 +81,7 @@ protected:
 			RECEIVE_CHK				//wait for checksum
 		};
 
-	unsigned int _serialNumber;
+	SerialDriver* _serialDriver;
 //	eStatusReceiveState _receive_state;
 //	int _nb_bytes_to_read;
 //	size_t _nb_params;

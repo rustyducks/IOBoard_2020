@@ -6,8 +6,23 @@
 
 #define NO_OP asm("NOP")//__asm nop
 
-DynamixelSerial::DynamixelSerial(unsigned int serialNumber): _serialNumber(serialNumber){
+// UART at 500_000 bauds. Dynamixel default is 1_000_000, reconfigure it with the servo tester first!
+// Half duplex for bidirectionnal communication with dynamixels
+SerialConfig uart_conf_dynamixels = {
+		.speed = 500000,
+		.cr1 = 0,
+		.cr2 = USART_CR2_STOP1_BITS,
+		.cr3 = USART_CR3_HDSEL
+};
+
+
+DynamixelSerial::DynamixelSerial(): _serialDriver(NULL){
 	_error = 0;
+}
+
+void DynamixelSerial::init(SerialDriver* sd) {
+	_serialDriver = sd;
+	sdStart(sd, &uart_conf_dynamixels);
 }
 
 int DynamixelSerial::reset(unsigned char ID){
@@ -336,12 +351,12 @@ int DynamixelSerial::sendInstruction(uint8_t ID, uint8_t instruction, uint8_t* p
 
 	uint8_t rxPacket[SERIAL_BUFFERS_SIZE];
 	// read all input buffer to clean it.
-	sdReadTimeout(&SD1, rxPacket, SERIAL_BUFFERS_SIZE, TIME_IMMEDIATE);
+	sdReadTimeout(_serialDriver, rxPacket, SERIAL_BUFFERS_SIZE, TIME_IMMEDIATE);
 
-	sdWrite(&SD1, txPacket, s);
+	sdWrite(_serialDriver, txPacket, s);
 
 	//uint8_t rxPacket[100];
-	volatile size_t n = sdRead(&SD1, rxPacket, s);
+	volatile size_t n = sdRead(_serialDriver, rxPacket, s);
 
 	if(n < s || memcmp(txPacket, rxPacket, s) != 0) {
 		//read bytes are not the same as send bytes. Something's wrong. (simultaneous communication ?)
@@ -365,7 +380,7 @@ int DynamixelSerial::readResponse(uint8_t *params){
 	while(true) {
 
 		if(_nb_bytes_to_read > 0) {
-			if(sdReadTimeout(&SD1, incoming, _nb_bytes_to_read, 500) < _nb_bytes_to_read) {
+			if(sdReadTimeout(_serialDriver, incoming, _nb_bytes_to_read, 500) < _nb_bytes_to_read) {
 				_receive_state = RECEIVE_IDLE;
 				return -1;	//timeout error
 			}

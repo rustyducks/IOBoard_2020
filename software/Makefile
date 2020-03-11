@@ -165,6 +165,8 @@ CSRC += drivers/i2c/srf02.c \
 CPPSRC += drivers/dynamixel/DynamixelSerial.cpp \
           drivers/tm1637/tm1637.cpp \
           VL6180x.cpp \
+          crane.cpp \
+          actuators.cpp \
           main.cpp
 
 # C sources to be compiled in ARM mode regardless of the global setting.

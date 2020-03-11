@@ -8,8 +8,11 @@ extern "C" {
 #include "hardware_config.h"
 #include "tm1637.h"
 }
+#include "DynamixelSerial.h"
+#include "actuators.h"
 
 TM1637Display display(LINE_DISPLAY_CLK, LINE_DISPLAY_DIO);
+DynamixelSerial dynamixels;
 
 static THD_WORKING_AREA(waBlinker, 256);
 
@@ -23,9 +26,12 @@ static void blinker (void *arg)
   while (true)
   {
     palToggleLine(LINE_LED_GREEN);
-    int tms = TIME_I2MS(chVTTimeElapsedSinceX(start));
-    display.setFloating(tms/1000.0);
-    chThdSleepMilliseconds(100);
+    // int tms = TIME_I2MS(chVTTimeElapsedSinceX(start));
+    // display.setFloating(tms/1000.0);
+
+    add_action(ACTION_TAKE_BUOY, 10, 0, HOLDER_LEFT);
+    //add_action(ACTION_SAY_HI, 10, 0, HOLDER_LEFT);
+    chThdSleepMilliseconds(5000);
   }  
 }
 
@@ -43,7 +49,11 @@ int main(void) {
 
   init_servos();
   init_I2C();
+  adcInit();
+
   display.startDisplay();
+  dynamixels.init(&SD1);
+  init_actuators(&dynamixels);
 
   chThdCreateStatic(waBlinker, sizeof(waBlinker), NORMALPRIO, &blinker, NULL);
 

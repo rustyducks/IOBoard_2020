@@ -52,7 +52,6 @@ PWMConfig pwmcfg1 = {
 	.dier = 0
 };
 
-
 void init_I2C() {
 	i2cStart(&I2CD1, &i2ccfg);
 }
