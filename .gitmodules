@@ -1,3 +1,9 @@
 [submodule "hardware/CDR2020_IO_board/kicad_libs_FBO"]
 	path = hardware/CDR2020_IO_board/kicad_libs_FBO
 	url = https://github.com/Fabien-B/kicad_libs_FBO
+[submodule "software/chibios_enac_various_common"]
+	path = software/chibios_enac_various_common
+	url = https://github.com/alex31/chibios_enac_various_common
+[submodule "software/chibios_svn_mirror"]
+	path = software/chibios_svn_mirror
+	url = https://github.com/alex31/chibios_svn_mirror

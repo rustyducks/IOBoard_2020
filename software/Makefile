@@ -110,12 +110,12 @@ endif
 #
 
 # Define project name here
-PROJECT = testeur
+PROJECT = IOBoard
 BOARD = NUCLEO432
 
-CHIBIOS = /home/fabien/elec/testeurV2/software/embedded/chibios_svn_mirror
+CHIBIOS = chibios_svn_mirror
 #STMSRC = $(CHIBISTUDIO)/COMMON/stm
-VARIOUS = /home/fabien/elec/testeurV2/software/embedded/chibios_enac_various_common
+VARIOUS = chibios_enac_various_common
 USBD_LIB = $(VARIOUS)/Chibios-USB-Devices
 BOARDGEN = $(VARIOUS)/TOOLS/boardGen.pl
 BMPFLASH = $(VARIOUS)/TOOLS/bmpflash
