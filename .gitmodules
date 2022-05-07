@@ -7,3 +7,9 @@
 [submodule "software/chibios_svn_mirror"]
 	path = software/chibios_svn_mirror
 	url = https://github.com/alex31/chibios_svn_mirror
+[submodule "Crolonome/lib/EmbeddedProto"]
+	path = Crolonome/lib/EmbeddedProto
+	url = https://github.com/Embedded-AMS/EmbeddedProto.git
+[submodule "Crolonome/protoduck"]
+	path = Crolonome/protoduck
+	url = git@github.com:rustyducks/protoduck.git
