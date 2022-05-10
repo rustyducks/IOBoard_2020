@@ -30,7 +30,7 @@ constexpr uint32_t LANGUE = SERVO4;
 
 constexpr uint32_t EMAG = PA10;
 
-#define DYNAMIXELS_HALF_DUP_SERIAL Serial1
+// #define DYNAMIXELS_HALF_DUP_SERIAL Serial1
 
 
 #endif /* PINLAYOUT_H */

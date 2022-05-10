@@ -1,4 +1,6 @@
 #include "ducklink/Communication.h"
+#include <Arduino.h>
+#include "PinLayout.h"
 
 Communication communication(&Serial2);
 
@@ -85,9 +87,10 @@ void Communication::sendHMI() {
     Message msg;
     msg.set_msg_type(Message::MsgType::STATUS);
     auto& hmi = msg.mutable_hmi();
-    hmi.set_bouton(true);
-    hmi.set_color(true);
-    hmi.set_tirette(true);
+    bool color = digitalRead(COLOR);
+    bool tirette = digitalRead(TIRETTE);
+    hmi.set_color(color);
+    hmi.set_tirette(tirette);
     // led and display not set.
     send(msg);
 }
