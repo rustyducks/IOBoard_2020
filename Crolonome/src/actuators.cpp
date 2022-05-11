@@ -50,9 +50,12 @@ void actuators_handle(Message msg) {
             }
             break;
         case Proc::TROMPE:
-            if(param >= 0 && param < 3) {
-                trompe.writeMicroseconds(TROMPE_POS[param]);
+            int32_t pos_index = param & 0xFF;
+            int32_t emag = (param >> 8) & 0xFF;
+            if(pos_index >= 0 && pos_index < 3) {
+                trompe.writeMicroseconds(TROMPE_POS[pos_index]);
             }
+            digitalWrite(EMAG, emag);
             break;
         case Proc::LANGUE:
             if(param >= 0 && param < 2) {

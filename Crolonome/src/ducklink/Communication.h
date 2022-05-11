@@ -29,6 +29,7 @@ class Communication {
     eMessageStatus checkMessages(Message& msg);
     void sendError(::protoduck::Error::Errors e, uint32_t param);
     void sendHMI();
+    void sendResistance();
 
    protected:
     void send(Message msg);

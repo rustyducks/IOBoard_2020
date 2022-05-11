@@ -45,6 +45,7 @@ void loop() {
 
     if(millis() - status_time > 200) {
         communication.sendHMI();
+        communication.sendResistance();
         status_time = millis();
     }    
 }

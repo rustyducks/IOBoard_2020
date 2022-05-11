@@ -96,6 +96,15 @@ void Communication::sendHMI() {
     send(msg);
 }
 
+void Communication::sendResistance() {
+    Message msg;
+    msg.set_msg_type(Message::MsgType::STATUS);
+    auto& res = msg.mutable_resistance();
+    auto value = analogRead(R_MEAS);
+    res.set_value(value);
+    send(msg);
+}
+
 void Communication::send(Message msg) {
     msg.set_source(Message::Agent::DIFF);
     msg.set_msg_type(Message::MsgType::STATUS);
