@@ -44,12 +44,13 @@ Communication::eMessageStatus Communication::checkMessages(Message& msg) {
         }
     }
     if (receiveState_ == Communication::eRcvState::PAYLOAD) {
-        if (serial_->available() >= nbBytesExpected_) {
-            for (size_t i = 0; i < nbBytesExpected_; i++) {
-                serial_->readBytes(&byte, 1);
-                checksum_ ^= byte;
-                rcvBuffer_.push(byte);
-            }
+        while(serial_->available() > 0 && nbBytesExpected_ > 0) {
+            serial_->readBytes(&byte, 1);
+            checksum_ ^= byte;
+            rcvBuffer_.push(byte);
+            nbBytesExpected_--;
+        }
+        if(nbBytesExpected_ == 0) {
             receiveState_ = Communication::eRcvState::CHECKSUM;
         }
     }
